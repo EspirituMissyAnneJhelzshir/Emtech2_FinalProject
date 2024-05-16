@@ -1,5 +1,5 @@
-pip install numpy==1.19.3
-streamlit==0.89.0
-pip install opencv-python==4.5.3.56
+numpy==1.19.3
+opencv-python==4.5.3.56
+streamlit==1.34.0
 tensorflow
 Pillow == 10.1.0
