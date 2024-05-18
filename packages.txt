@@ -2,6 +2,7 @@ dpkg -l | grep libgl1-mesa-glx
 sudo apt-get update
 sudo apt-get install -y libgl1-mesa-glx
 locate libGL.so.1
-export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+find / -name libGL.so.1
+export LD_LIBRARY_PATH=/path/to/libGL.so.1:$LD_LIBRARY_PATH
 conda install -c conda-forge opencv
 
