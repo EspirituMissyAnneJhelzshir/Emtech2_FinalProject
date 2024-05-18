@@ -53,6 +53,20 @@ from keras.utils import load_img
 from keras.utils import img_to_array
 from keras.utils import to_categorical
 
+import os
+
+# Check if libGL.so.1 exists
+libgl_path = "/usr/lib/libGL.so.1"
+if os.path.exists(libgl_path):
+    print(f"libGL.so.1 found at: {libgl_path}")
+else:
+    print("libGL.so.1 not found")
+
+# Print LD_LIBRARY_PATH
+ld_library_path = os.environ.get("LD_LIBRARY_PATH", "not set")
+print(f"LD_LIBRARY_PATH: {ld_library_path}")
+
+
 import subprocess
 import sys
 
