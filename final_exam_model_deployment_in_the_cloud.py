@@ -48,13 +48,34 @@ from keras.utils import load_img
 from keras.utils import img_to_array
 from keras.utils import to_categorical
 
-pip install streamlit
-pip install -r requirements.txt
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+install('streamlit')
+
+import subprocess
+import sys
+
+# Function to install a package
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Install streamlit
+install('streamlit')
+
+
 import streamlit as st
 import numpy as np
 import tensorflow as tf
 from PIL
 import Image, ImageOps
+
+# Your streamlit code goes here
+st.title('My Streamlit App')
+st.write('Hello, Streamlit!')
 
 @st.cache(allow_output_mutation=True)
 def load_model():
