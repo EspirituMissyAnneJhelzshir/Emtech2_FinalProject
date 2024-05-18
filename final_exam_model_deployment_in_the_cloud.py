@@ -17,9 +17,15 @@ Instructor: Engr. Roman Richard <br>
 
 ## **IMPORTING MODULES:**
 """
-
-from google.colab import drive
-drive.mount('/content/drive')
+def is_colab():
+	try:
+		import google.colab
+		return True
+	except ImportError:
+		return False
+if is_colab():
+	from google.colab import drive
+	drive.mount('/content/drive')
 
 import time
 import cv2
@@ -76,6 +82,12 @@ import Image, ImageOps
 # Your streamlit code goes here
 st.title('My Streamlit App')
 st.write('Hello, Streamlit!')
+
+# Command to run streamlit
+command = "streamlit run /usr/local/lib/python3.10/dist-packages/colab_kernel_launcher.py"
+
+# Execute the command
+subprocess.run(command, shell=True, check=True)
 
 @st.cache(allow_output_mutation=True)
 def load_model():
