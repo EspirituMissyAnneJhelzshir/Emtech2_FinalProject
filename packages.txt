@@ -1,8 +1,1 @@
-dpkg -l | grep libgl1-mesa-glx
-sudo apt-get update
-sudo apt-get install $(cat /mount/src/emtech2_finalproject/packages.txt)
-locate libGL.so.1
-find / -name libGL.so.1
-export LD_LIBRARY_PATH=/path/to/libGL.so.1:$LD_LIBRARY_PATH
-conda install -c conda-forge opencv
 
