@@ -32,7 +32,6 @@ import cv2
 from PIL import Image,ImageOps
 import numpy as np
 import sys
-from matplotlib import pyplot as plt
 import pandas as pd
 from PIL import Image
 from numpy import mean
