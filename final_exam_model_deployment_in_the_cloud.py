@@ -62,6 +62,12 @@ def install(package):
 install('streamlit')
 
 import subprocess
+def install_opengl():
+    subprocess.run(['sudo', 'apt-get', 'update'])
+    subprocess.run(['sudo', 'apt-get', 'install', '-y', 'libgl1-mesa-glx'])
+
+install_opengl()
+
 import sys
 
 # Function to install a package
