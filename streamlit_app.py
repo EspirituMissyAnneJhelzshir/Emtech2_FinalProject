@@ -6,13 +6,17 @@ import numpy as np
 from PIL import Image, ImageOps
 
 def load_image(filename):
-    img = Image.open(filename).resize((224, 224))
-    img = img_to_array(img)
-    img = img[:,:,0]
-    img = img.reshape(1, 28, 28, 1)
-    img = img.astype('float32')
-    img = img / 255.0
-    return img
+    try:
+        img = Image.open(filename).resize((224, 224))
+        img = img_to_array(img)
+        img = img[:,:,0]
+        img = img.reshape(1, 28, 28, 1)
+        img = img.astype('float32')
+        img = img / 255.0
+        return img
+    except FileNotFoundError:
+        st.error("File not found. Please make sure the file path is correct.")
+        return None
 
 def run_example(filename):
     img = load_image(filename)
