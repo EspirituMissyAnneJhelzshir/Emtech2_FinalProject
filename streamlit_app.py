@@ -5,67 +5,67 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image, ImageOps
 
-# Define the function to load the fashion classification model
+
+from tensorflow.keras.preprocessing.image import img_to_array
+from keras.models import load_model
+
 @st.cache(allow_output_mutation=True)
 def load_fashion_model():
-    try:
-        model = tf.keras.models.load_model('/content/drive/MyDrive/Models/saved_fashion.h5')
-        return model
-    except FileNotFoundError:
-        st.error("Model file not found. Please make sure the file path is correct.")
-        return None
-# Define the function to preprocess and make predictions on uploaded images
-def predict_fashion(image_data, model):
-    size = (64, 64)
-    image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
+    model = tf.keras.models.load_model('saved_fashion.h5')
+    return model
+
+def import_and_predict(image_data, model):
+    size = (28, 28)
+
+    # Ensure image_data is in the correct data type and range
+    image_data = (image_data * 255).astype(np.uint8)
+    # Convert the NumPy array to an Image instance
+    image = Image.fromarray(image_data)
+    # Use ImageOps.fit with the Image instance
+    
+    image = ImageOps.fit(image, size)
     img = np.asarray(image)
-    img_reshape = img[np.newaxis, ...]
+    
+    img = img[:, :, 0]
+
+    img_reshape = img[np.newaxis, ..., np.newaxis]
     prediction = model.predict(img_reshape)
     return prediction
 
-def main():
-    model = load_fashion_model()  # Load the fashion classification model
-    run_example('/content/kiki_fashion_example.jpg', model)  # Run the example using the loaded model
+def load_image():
 
-# Define the function to run the example
-def run_example(filename, model):
-    img = load_image(filename)
-    if img is not None:
-        result = np.argmax(model.predict(img), axis=1)
-        if result == 0:
-            st.write('Tshirt')
-        elif result == 1:
-            st.write('Top')
-        elif result == 2:
-            st.write('Pullover')
-        elif result == 3:
-            st.write('Dress')
-        elif result == 4:
-            st.write('Coat')
-        elif result == 5:
-            st.write('Sandal')
-        elif result == 6:
-            st.write('Shirt')
-        elif result == 7:
-            st.write('Snicker')
-        elif result == 8:
-            st.write('Bag')
-        else:
-            st.write('Ankle Boot')
+    
+    # Check if the image is grayscale, if so, add a channel dimension
+    if len(img.shape) == 2:
+        img = np.expand_dims(img, axis=-1)
+    
+    img = img / 255.0
+    img = np.reshape(img, (1, 64, 64, img.shape[-1]))
+    return img
 
-# Define the function to load and preprocess the image
-def load_image(filename):
-    try:
-        img = Image.open(filename).resize((224, 224))
-        img = img_to_array(img)
-        img = img[:,:,0]
-        img = img.reshape(1, 28, 28, 1)
-        img = img.astype('float32')
-        img = img / 255.0
-        return img
-    except FileNotFoundError:
-        st.error("File not found. Please make sure the file path is correct.")
-        return None
+model = load_fashion_model()
 
-if __name__ == "__main__":
-    main()
+st.write("""# Fashion Dataset by Espiritu_Santos""")
+file = st.file_uploader("Choose photo from computer", type=["jpg", "png"])
+
+if file is None:
+    st.text("Please upload an image file")
+else:
+    image = Image.open(file)
+    st.image(image, use_column_width=True)
+
+    # Convert the image to a NumPy array
+    image_array = img_to_array(image)
+
+    # Normalize the image
+    image_array = image_array / 255.0
+
+    # Load the image into the model for prediction
+    prediction = import_and_predict(image_array, model)
+
+    class_names = ['T-shirt', 'Top', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle Boot']
+
+    result_class = np.argmax(prediction)
+    result_label = class_names[result_class]
+    string = f"Prediction: {result_label} ({prediction[0][result_class]:.2%} confidence)"
+    st.success(string)
