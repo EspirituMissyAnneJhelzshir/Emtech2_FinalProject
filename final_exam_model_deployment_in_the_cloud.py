@@ -28,6 +28,7 @@ if is_colab():
 	drive.mount('/content/drive')
 
 import time
+import cv2
 from PIL import Image,ImageOps
 import numpy as np
 import sys
