@@ -48,11 +48,10 @@ from keras.utils import load_img
 from keras.utils import img_to_array
 from keras.utils import to_categorical
 
-import subprocess
+import os
 
-# Run Streamlit using subprocess
-subprocess.call(['streamlit', 'run', '/usr/local/lib/python3.10/dist-packages/colab_kernel_launcher.py'])
-
+# Run Streamlit using os.system()
+os.system('streamlit run /usr/local/lib/python3.10/dist-packages/colab_kernel_launcher.py')
 
 import streamlit as st
 import numpy as np
