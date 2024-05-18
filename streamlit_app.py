@@ -17,6 +17,11 @@ def load_fashion_model():
 def import_and_predict(image_data, model):
     size = (28, 28)
 
+    # Convert the image data to uint8 and reshape if necessary
+    image_data = (image_data * 255).astype(np.uint8)
+    if len(image_data.shape) == 2:
+        image_data = np.expand_dims(image_data, axis=-1)
+
     # Convert the image data to an Image object
     image = Image.fromarray(image_data)
 
@@ -39,6 +44,7 @@ def import_and_predict(image_data, model):
     prediction = model.predict(img_reshape)
 
     return prediction
+
 
 
 def load_image():
