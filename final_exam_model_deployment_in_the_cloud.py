@@ -48,7 +48,10 @@ from keras.utils import load_img
 from keras.utils import img_to_array
 from keras.utils import to_categorical
 
-!pip install streamlit
+import subprocess
+
+# Install Streamlit
+subprocess.call(['pip', 'install', 'streamlit'])
 
 import streamlit as st
 import numpy as np
