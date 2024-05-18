@@ -48,10 +48,13 @@ from keras.utils import load_img
 from keras.utils import img_to_array
 from keras.utils import to_categorical
 
+pip install streamlit
+pip install -r requirements.txt
 import streamlit as st
 import numpy as np
 import tensorflow as tf
-from PIL import Image, ImageOps
+from PIL
+import Image, ImageOps
 
 @st.cache(allow_output_mutation=True)
 def load_model():
