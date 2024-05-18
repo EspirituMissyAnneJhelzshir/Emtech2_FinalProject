@@ -352,4 +352,17 @@ def run_example(filename):
 
 run_example('/content/kiki_fashion_example.jpg')
 
+import subprocess
+import sys
+
+# Function to install a package
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Install streamlit
+install('streamlit')
+
 !streamlit run /usr/local/lib/python3.10/dist-packages/colab_kernel_launcher.py
+
+# Execute the command
+subprocess.run(command, shell=True, check=True)
