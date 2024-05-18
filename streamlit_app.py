@@ -8,9 +8,12 @@ from PIL import Image, ImageOps
 # Define the function to load the fashion classification model
 @st.cache(allow_output_mutation=True)
 def load_fashion_model():
-    model = tf.keras.models.load_model('/content/drive/MyDrive/Models/saved_fashion.h5')
-    return model
-
+    try:
+        model = tf.keras.models.load_model('/content/drive/MyDrive/Models/saved_fashion.h5')
+        return model
+    except FileNotFoundError:
+        st.error("Model file not found. Please make sure the file path is correct.")
+        return None
 # Define the function to preprocess and make predictions on uploaded images
 def predict_fashion(image_data, model):
     size = (64, 64)
