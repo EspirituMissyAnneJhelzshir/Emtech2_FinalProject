@@ -1,11 +1,7 @@
-# streamlit_app.py
-
 import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image, ImageOps
-
-
 from tensorflow.keras.preprocessing.image import img_to_array
 from keras.models import load_model
 
@@ -17,39 +13,19 @@ def load_fashion_model():
 def import_and_predict(image_data, model):
     size = (28, 28)
 
-    # Convert the image data to uint8 and reshape if necessary
+    # Ensure image_data is in the correct data type and range
     image_data = (image_data * 255).astype(np.uint8)
-    if len(image_data.shape) == 2:
-        image_data = np.expand_dims(image_data, axis=-1)
-
-    # Convert the image data to an Image object
+    # Convert the NumPy array to an Image instance
     image = Image.fromarray(image_data)
+    # Use ImageOps.fit with the Image instance
+    
+    image = ImageOps.fit(image, size)
+    img = np.asarray(image)
+    
+    img = img[:, :, 0]
 
-    # Convert the image to grayscale
-    image_gray = ImageOps.grayscale(image)
-
-    # Resize the image to match the input size of the model
-    image_resized = image_gray.resize(size)
-
-    # Convert the resized image to a NumPy array
-    img = img_to_array(image_resized)
-
-    # Normalize the image
-    img = img / 255.0
-
-    # Reshape the image for the model input
     img_reshape = img[np.newaxis, ..., np.newaxis]
-
-    # Debugging: Print shape and values of input data
-    print("Input shape before prediction:", img_reshape.shape)
-    print("Input data before prediction:", img_reshape)
-
-    # Make prediction
     prediction = model.predict(img_reshape)
-
-    # Debugging: Print prediction
-    print("Prediction:", prediction)
-
     return prediction
 
 def load_image():
