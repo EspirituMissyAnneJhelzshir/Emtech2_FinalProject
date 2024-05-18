@@ -40,12 +40,17 @@ def import_and_predict(image_data, model):
     # Reshape the image for the model input
     img_reshape = img[np.newaxis, ..., np.newaxis]
 
+    # Debugging: Print shape and values of input data
+    print("Input shape before prediction:", img_reshape.shape)
+    print("Input data before prediction:", img_reshape)
+
     # Make prediction
     prediction = model.predict(img_reshape)
 
+    # Debugging: Print prediction
+    print("Prediction:", prediction)
+
     return prediction
-
-
 
 def load_image():
 
