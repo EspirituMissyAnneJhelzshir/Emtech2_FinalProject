@@ -17,19 +17,24 @@ def load_fashion_model():
 def import_and_predict(image_data, model):
     size = (28, 28)
 
-    # Ensure image_data is in the correct data type and range
-    image_data = (image_data * 255).astype(np.uint8)
-    # Convert the NumPy array to an Image instance
-    image = Image.fromarray(image_data)
-    # Use ImageOps.fit with the Image instance
-    
-    image = ImageOps.fit(image, size)
-    img = np.asarray(image)
-    
-    img = img[:, :, 0]
+    # Convert the image data to grayscale
+    image_data_gray = ImageOps.grayscale(image_data)
 
+    # Resize the image to match the input size of the model
+    image_resized = image_data_gray.resize(size)
+
+    # Convert the resized image to a NumPy array
+    img = img_to_array(image_resized)
+
+    # Normalize the image
+    img = img / 255.0
+
+    # Reshape the image for the model input
     img_reshape = img[np.newaxis, ..., np.newaxis]
+
+    # Make prediction
     prediction = model.predict(img_reshape)
+
     return prediction
 
 def load_image():
